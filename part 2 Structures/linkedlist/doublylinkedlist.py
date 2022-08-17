@@ -24,7 +24,7 @@ class DoublyNode(Generic[T]):
     prev_ptr: Optional['DoublyNode[T]'] = None
 
 
-class SingleLinkedList(Generic[T]):
+class DoublyLinkedList(Generic[T]):
 
     def __init__(self) -> None:
         self._length: int = 0
@@ -164,7 +164,7 @@ def print_list(data: T):
 
 
 if __name__ == '__main__':
-    doubly_linked_list = SingleLinkedList[Cat]()
+    doubly_linked_list = DoublyLinkedList[Cat]()
     print(doubly_linked_list)
     doubly_linked_list.push_head(Cat("Max", 4))
     doubly_linked_list.push_head(Cat("Alex", 5))
