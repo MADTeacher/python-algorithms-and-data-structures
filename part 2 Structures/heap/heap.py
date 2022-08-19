@@ -3,14 +3,15 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import TypeVar, Generic, Optional, Callable
 
-T = TypeVar("T")
-
 
 class IKey(ABC):
 
     @abstractmethod
     def key(self) -> int:
         ...
+
+
+T = TypeVar("T", bound=IKey)
 
 
 class HeapOverFlowException(Exception):
