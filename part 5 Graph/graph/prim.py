@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Generic, Optional
+from typing import Generic
 
 from my_collections import Heap, IKey, MySet
 from graph import Graph, T, AdjacentEdge, Edge

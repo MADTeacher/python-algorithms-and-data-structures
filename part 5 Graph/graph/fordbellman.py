@@ -11,7 +11,7 @@ class _Node(Generic[T]):
     predecessor: Optional[T]
 
 
-def ford_bellman(graph: Graph[T], start: T, end: T) -> (list[T], int):
+def ford_bellman(graph: Graph[T], start: T, end: T) -> tuple[list[T], int]:
     nodes: dict[T, _Node[T]] = {}
 
     def foreach(vertex: T) -> None:

@@ -19,7 +19,7 @@ class _DijkstraNode(Generic[T], IKey):
         return f"{self.vertex}"
 
 
-def dijkstra(graph: Graph[T], start: T, end: T) -> (list[T], int):
+def dijkstra(graph: Graph[T], start: T, end: T) -> tuple[list[T], int]:
     heap = Heap[_DijkstraNode[T]](graph.amount_vertexes(), True)
     nodes: dict[T, _DijkstraNode[T]] = {}
 

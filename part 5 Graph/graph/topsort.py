@@ -1,7 +1,7 @@
 from graph import Graph, T, AdjacentEdge, Edge
 
 
-def topological_sort(graph: Graph[T]) -> (list[T], dict[T, int], bool):
+def topological_sort(graph: Graph[T]) -> tuple[list[T], dict[T, int], bool]:
     in_degree: dict[T, int] = {}
 
     def dec_degree(edge: AdjacentEdge[T]) -> None:
