@@ -1,9 +1,3 @@
-from collections.abc import Callable
-from typing import TypeVar
-
-T = TypeVar("T")
-
-
 class Worker:
     def __init__(self, name: str, id: int):
         self.__id = id
@@ -61,23 +55,34 @@ def fibonacci_search(arr: list[Worker], x: int) -> int:
     raise ValueError("Not Found")
 
 
-worker_slice = [Worker(*item) for item in [("Julie", 1), ("Alex", 2), ("Tom", 4),
-                                           ("George", 3), ("Max", 60), ("Tommy", 94), ("William", 12),
-                                           ("Sophia", 14), ("Oliver", 13), ("Sandra", 91),
-                                           ("Ann", 6), ("Elizabeth", 9), ("Kate", 20)]]
+if __name__ == '__main__':
+    workers = [Worker(*item) for item in [("Julie", 1),
+                                          ("Alex", 2),
+                                          ("Tom", 4),
+                                          ("George", 3),
+                                          ("Max", 60),
+                                          ("Tommy", 94),
+                                          ("William", 12),
+                                          ("Sophia", 14),
+                                          ("Oliver", 13),
+                                          ("Sandra", 91),
+                                          ("Ann", 6),
+                                          ("Elizabeth", 9),
+                                          ("Kate", 20)]
+               ]
 
-# сортировка по возрастанию id
-worker_slice.sort(key=lambda el: el.get_id())
-print(f"Array after sorting by id: {worker_slice}")
+    # сортировка по возрастанию id
+    workers.sort(key=lambda el: el.get_id())
+    print(f"Array after sorting by id: {workers}")
 
-# поиск по существующему id
-id = 4
-index = fibonacci_search(worker_slice, id)
-print(f"Element is located by the index: {index}, its value: {worker_slice[index]}")
+    # поиск по существующему id
+    id = 4
+    index = fibonacci_search(workers, id)
+    print(f"Element is located by the index: {index}, its value: {workers[index]}")
 
-# поиск по не существующему id
-id = 32
-try:
-    index = fibonacci_search(worker_slice, id)
-except ValueError as e:
-    print(f"Searching {id} : {e}")
+    # поиск по не существующему id
+    id = 32
+    try:
+        index = fibonacci_search(workers, id)
+    except ValueError as e:
+        print(f"Searching {id} : {e}")

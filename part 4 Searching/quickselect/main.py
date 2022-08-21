@@ -1,22 +1,4 @@
 import random
-from typing import TypeVar
-
-T = TypeVar("T")
-
-
-class Worker:
-    def __init__(self, name: str, id: int):
-        self.__id = id
-        self.__name = name
-
-    def __repr__(self):
-        return f"{self.__name}:{self.__id}"
-
-    def get_id(self) -> int:
-        return self.__id
-
-    def get_name(self) -> str:
-        return self.__name
 
 
 def quick_select(arr: list[int], k: int) -> int:
@@ -45,15 +27,16 @@ def quick_select(arr: list[int], k: int) -> int:
         return quick_select(R, k - (len(L) + len(M)))
 
 
-arr = [3, -2, 0, 4, 22, -1, 34, 10, 5, 7, 9]
+if __name__ == '__main__':
+    arr = [3, -2, 0, 4, 22, -1, 34, 10, 5, 7, 9]
 
-print(f"Array: {arr}")
-k = 3
-kMin = quick_select(arr, k)
-print(f"{k}-th min element is: {kMin}")  # 3-th min element is: 0
-k = 2
-kMin = quick_select(arr, k)
-print(f"{k}-th min element is: {kMin}")  # 2-th min element is: -1
-k = 5
-kMin = quick_select(arr, k)
-print(f"{k}-th min element is: {kMin}")  # 5-th min element is: 4
+    print(f"Array: {arr}")
+    k = 3
+    kMin = quick_select(arr, k)
+    print(f"{k}-th min element is: {kMin}")  # 3-th min element is: 0
+    k = 2
+    kMin = quick_select(arr, k)
+    print(f"{k}-th min element is: {kMin}")  # 2-th min element is: -1
+    k = 5
+    kMin = quick_select(arr, k)
+    print(f"{k}-th min element is: {kMin}")  # 5-th min element is: 4

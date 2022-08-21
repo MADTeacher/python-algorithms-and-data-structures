@@ -1,8 +1,3 @@
-from typing import TypeVar
-
-T = TypeVar("T")
-
-
 class Worker:
     def __init__(self, name: str, id: int):
         self.__id = id
@@ -24,7 +19,8 @@ def interpolation_search(arr: list[Worker], x: int) -> int:
 
     high = len(arr) - 1
     low = 0
-    while arr[high].get_id() != arr[low].get_id() and arr[low].get_id() <= x <= arr[high].get_id():
+    while (arr[high].get_id() != arr[low].get_id() and
+           arr[low].get_id() <= x <= arr[high].get_id()):
         pos = low + int((high - low) /
                         (arr[high].get_id() - arr[low].get_id()) *
                         (x - arr[low].get_id()))
@@ -38,23 +34,34 @@ def interpolation_search(arr: list[Worker], x: int) -> int:
     raise ValueError("Not Found")
 
 
-worker_slice = [Worker(*item) for item in [("Julie", 1), ("Alex", 2), ("Tom", 4),
-                                           ("George", 3), ("Max", 60), ("Tommy", 94), ("William", 12),
-                                           ("Sophia", 14), ("Oliver", 13), ("Sandra", 91),
-                                           ("Ann", 6), ("Elizabeth", 9), ("Kate", 20)]]
+if __name__ == '__main__':
+    workers = [Worker(*item) for item in [("Julie", 1),
+                                          ("Alex", 2),
+                                          ("Tom", 4),
+                                          ("George", 3),
+                                          ("Max", 60),
+                                          ("Tommy", 94),
+                                          ("William", 12),
+                                          ("Sophia", 14),
+                                          ("Oliver", 13),
+                                          ("Sandra", 91),
+                                          ("Ann", 6),
+                                          ("Elizabeth", 9),
+                                          ("Kate", 20)]
+               ]
+    # сортировка по возрастанию id
+    workers.sort(key=lambda el: el.get_id())
+    print(f"Array after sorting by id: {workers}")
 
-# сортировка по возрастанию id
-worker_slice.sort(key=lambda el: el.get_id())
-print(f"Array after sorting by id: {worker_slice}")
+    # поиск по существующему id
+    id = 4
+    index = interpolation_search(workers, id)
+    print(
+        f"Element is located by the index: {index}, its value: {workers[index]}")
 
-# поиск по существующему id
-id = 4
-index = interpolation_search(worker_slice, id)
-print(f"Element is located by the index: {index}, its value: {worker_slice[index]}")
-
-# поиск по не существующему id
-id = 32
-try:
-    index = interpolation_search(worker_slice, id)
-except ValueError as e:
-    print(f"Searching {id} : {e}")
+    # поиск по не существующему id
+    id = 32
+    try:
+        index = interpolation_search(workers, id)
+    except ValueError as e:
+        print(f"Searching {id} : {e}")
