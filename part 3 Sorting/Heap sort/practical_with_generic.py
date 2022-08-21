@@ -1,4 +1,5 @@
 from collections.abc import Callable
+import copy
 from typing import TypeVar
 
 T = TypeVar("T")
@@ -74,31 +75,41 @@ class Heap:
         self.trickle_down(0)
         return root
 
-def heap_sort(arr: list[T], comp: Callable[[T, T], bool]) -> list[T]:
+def heap_sort(arr: list[T], comp: Callable[[T, T], bool]) -> None:
     if len(arr) == 0:
         raise ValueError("array is empty")
-    arr = arr.copy()
 
     heap = Heap(arr, comp)
     for i in range(len(arr) - 1, -1, -1):
         arr[i] = heap.remove()
-    return arr
 
 
-worker_slice = [Worker(*item) for item in [("Julie", 1), ("Alex", 2), ("Tom", 4),
-                                           ("George", 3), ("Max", 60), ("Tommy", 94), ("William", 12),
-                                           ("Sophia", 14), ("Oliver", 13), ("Sandra", 91),
-                                           ("Ann", 6), ("Elizabeth", 9), ("Kate", 20)]]
+if __name__ == '__main__':
+    workers = [Worker(*item) for item in [("Julie", 1),
+                                          ("Alex", 2),
+                                          ("Tom", 4),
+                                          ("George", 3),
+                                          ("Max", 60),
+                                          ("Tommy", 94),
+                                          ("William", 12),
+                                          ("Sophia", 14),
+                                          ("Oliver", 13),
+                                          ("Sandra", 91),
+                                          ("Ann", 6),
+                                          ("Elizabeth", 9),
+                                          ("Kate", 20)]
+               ]
+    workers_copy = copy.deepcopy(workers)
+    print(f"Array before sort: {workers}")
 
-print(f"Array before sort: {worker_slice}")
-print("---------Sort by id-----------")
-sortedArray = heap_sort(worker_slice, lambda i, j: i.get_id() < j.get_id())
-print(f"Array after ascending sorting: {sortedArray}")
-sortedArray = heap_sort(worker_slice, lambda i, j: i.get_id() > j.get_id())
-print(f"Array after descending sorting: {sortedArray}")
+    print("---------Sort by id-----------")
+    heap_sort(workers, lambda i, j: i.get_id() < j.get_id())
+    print(f"Array after ascending sorting: {workers}")
+    heap_sort(workers_copy, lambda i, j: i.get_id() > j.get_id())
+    print(f"Array after descending sorting: {workers_copy}")
 
-print("---------Sort by name-----------")
-sortedArray = heap_sort(worker_slice, lambda i, j: i.get_name() < j.get_name())
-print(f"Array after ascending sorting: {sortedArray}")
-sortedArray = heap_sort(worker_slice, lambda i, j: i.get_name() > j.get_name())
-print(f"Array after descending sorting: {sortedArray}")
+    print("---------Sort by name-----------")
+    heap_sort(workers, lambda i, j: i.get_name() < j.get_name())
+    print(f"Array after ascending sorting: {workers}")
+    heap_sort(workers_copy, lambda i, j: i.get_name() > j.get_name())
+    print(f"Array after descending sorting: {workers_copy}")

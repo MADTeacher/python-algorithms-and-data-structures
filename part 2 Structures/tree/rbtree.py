@@ -388,7 +388,7 @@ class RBTree(Generic[T]):
         return last_node.data
 
     def print_tree(self) -> None:
-        result: list[str] = ["BinarySearchTree\n"]
+        result: list[str] = ["RBTree\n"]
         if not self.is_empty():
             self.__create_str_tree(result, "", self._root, True)
         print("".join(result))

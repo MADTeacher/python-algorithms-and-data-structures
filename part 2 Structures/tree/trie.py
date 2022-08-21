@@ -44,20 +44,6 @@ class Trie(Generic[T]):
     def get_size(self) -> int:
         return self._length
 
-    def get(self, key: str) -> tuple[Optional[T], bool]:
-        if len(key) == 0:
-            return None, False
-        x = self.__find_node(self._root, key, 0)
-        if x is None or not x.is_end:
-            return None, False
-        return x.value, True
-
-    def contains(self, key: str) -> bool:
-        if len(key) == 0:
-            return False
-        _, ok = self.get(key)
-        return ok
-
     def __find_node(self, node:  Optional[Node[T]],
                     key: str, index: int) -> Optional[Node[T]]:
         if node is Node or len(key) == 0:
@@ -72,6 +58,20 @@ class Trie(Generic[T]):
             return self.__find_node(node.middle, key, index + 1)
         else:
             return node
+
+    def get(self, key: str) -> tuple[Optional[T], bool]:
+        if len(key) == 0:
+            return None, False
+        x = self.__find_node(self._root, key, 0)
+        if x is None or not x.is_end:
+            return None, False
+        return x.value, True
+
+    def contains(self, key: str) -> bool:
+        if len(key) == 0:
+            return False
+        _, ok = self.get(key)
+        return ok
 
     def put(self, key: str, value: T):
         if len(key) == 0:
@@ -123,6 +123,16 @@ class Trie(Generic[T]):
                 current_node = current_node.middle
         return query[:length]
 
+    def __assemble(self,  node:  Optional[Node[T]], prefix: str, queue: list[str]) -> list[str]:
+        if node is None:
+            return queue
+
+        queue = self.__assemble(node.left, prefix, queue)
+        if node.is_end:
+            queue.append(prefix + node.label)
+        queue = self.__assemble(node.middle, prefix + node.label, queue)
+        return self.__assemble(node.right, prefix, queue)
+
     def all_keys(self) -> list[str]:
         keys: list[str] = []
         return self.__assemble(self._root, "", keys)
@@ -139,16 +149,6 @@ class Trie(Generic[T]):
             keys.append(prefix)
         return self.__assemble(x.middle, prefix, keys)
 
-    def __assemble(self,  node:  Optional[Node[T]], prefix: str, queue: list[str]) -> list[str]:
-        if node is None:
-            return queue
-
-        queue = self.__assemble(node.left, prefix, queue)
-        if node.is_end:
-            queue.append(prefix + node.label)
-        queue = self.__assemble(node.middle, prefix + node.label, queue)
-        return self.__assemble(node.right, prefix, queue)
-
     def for_each(self, func: Callable[[str, T], None]):
         if self.is_empty():
             return
@@ -164,11 +164,10 @@ class Trie(Generic[T]):
             self.__for_each(local_root.right, func)
 
 
-def print_trie(key: str, value: T) -> None:
-    print(f"Key: {key}; Value: {value}")
-
-
 if __name__ == '__main__':
+    def print_trie(key: str, value: T) -> None:
+        print(f"Key: {key}; Value: {value}")
+
     data: dict[str, list[Worker]] = {
         "manager": [Worker("Julie", 1), Worker("Alex", 2), Worker("Tom", 4)],
         "policeman": [Worker("George", 3), Worker("Max", 60)],

@@ -159,11 +159,10 @@ class DoublyLinkedList(Generic[T]):
         return f"Current state: [{my_str}]"
 
 
-def print_list(data: T):
-    print(data)
-
-
 if __name__ == '__main__':
+    def print_list(data: T):
+        print(data)
+
     doubly_linked_list = DoublyLinkedList[Cat]()
     print(doubly_linked_list)
     doubly_linked_list.push_head(Cat("Max", 4))
@@ -179,4 +178,3 @@ if __name__ == '__main__':
 
     print("--ReverseForEach--")
     doubly_linked_list.reverse_for_each(print_list)
-

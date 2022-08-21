@@ -12,12 +12,11 @@ def find_max_min(array: list[int]) -> tuple[int, int]:
     return a_min, a_max
 
 
-def counting_sort(array: list[int]) -> list[int]:
+def counting_sort(array: list[int]) -> None:
     if len(array) == 0:
         raise ValueError("array is empty")
-    arr = array.copy()
 
-    a_min, a_max = find_max_min(arr)
+    a_min, a_max = find_max_min(array)
     array_counts = [0 for _ in range(a_max - a_min + 1)]
 
     for it in arr:
@@ -26,14 +25,13 @@ def counting_sort(array: list[int]) -> list[int]:
     it = 0
     for idx, count in enumerate(array_counts):
         while count > 0:
-            arr[it] = idx + a_min
+            array[it] = idx + a_min
             it += 1
             count -= 1
 
-    return arr
 
-
-arr = [1, 2, 6, 0, -2, -4, 22, 54, 109, 5, 3]
-sortedArray = counting_sort(arr)
-print(f"Array before sort: {arr}")
-print(f"Array after sorting: {sortedArray}")
+if __name__ == '__main__':
+    arr = [1, 2, 6, 0, -2, -4, 22, 54, 109, 5, 3]
+    print(f"Array before sort: {arr}")
+    counting_sort(arr)
+    print(f"Array after sorting: {arr}")

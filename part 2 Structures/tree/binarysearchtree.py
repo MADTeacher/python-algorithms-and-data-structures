@@ -271,9 +271,10 @@ class BinarySearchTree(Generic[T]):
 
 if __name__ == '__main__':
     workers: list[Worker] = [
-        Worker("Max", 83), Worker("Alex", 58), Worker("Tom", 98), Worker("Tommy", 62), Worker("Max", 70),
-        Worker("Alex", 34), Worker("Tom", 22), Worker("Max", 60), Worker("Alex", 99), Worker("Tom", 91),
-        Worker("Tommy", 94), Worker("Tommy", 85),
+        Worker("Max", 83), Worker("Alex", 58), Worker("Tom", 98), 
+        Worker("Tommy", 62), Worker("Max", 70), Worker("Alex", 34), 
+        Worker("Tom", 22), Worker("Max", 60), Worker("Alex", 99), 
+        Worker("Tom", 91), Worker("Tommy", 94), Worker("Tommy", 85),
     ]
 
     tree: BinarySearchTree[Worker] = BinarySearchTree[Worker]()

@@ -1,4 +1,5 @@
 from collections.abc import Callable
+import copy
 from typing import TypeVar
 
 T = TypeVar("T")
@@ -19,7 +20,8 @@ class Worker:
         return self.__name
 
 
-def merge_sort_impl(arr: list[T], buffer: list[T], l: int, r: int, comp: Callable[[T, T], bool]):
+def merge_sort_impl(arr: list[T], buffer: list[T], l: int,
+                    r: int, comp: Callable[[T, T], bool]) -> None:
     if l < r:
         m = (l + r) // 2
         merge_sort_impl(arr, buffer, l, m, comp)
@@ -40,30 +42,40 @@ def merge_sort_impl(arr: list[T], buffer: list[T], l: int, r: int, comp: Callabl
             arr[i] = buffer[i]
 
 
-def merge_sort(arr: list[T], comp: Callable[[T, T], bool]) -> list[T]:
+def merge_sort(arr: list[T], comp: Callable[[T, T], bool]) -> None:
     if len(arr) == 0:
         raise ValueError("array is empty")
-    arr = arr.copy()
 
     buffer = [None for _ in range(len(arr))]
     merge_sort_impl(arr, buffer, 0, len(arr) - 1, comp)
-    return arr
 
 
-worker_slice = [Worker(*item) for item in [("Julie", 1), ("Alex", 2), ("Tom", 4),
-                                           ("George", 3), ("Max", 60), ("Tommy", 94), ("William", 12),
-                                           ("Sophia", 14), ("Oliver", 13), ("Sandra", 91),
-                                           ("Ann", 6), ("Elizabeth", 9), ("Kate", 20)]]
+if __name__ == '__main__':
+    workers = [Worker(*item) for item in [("Julie", 1),
+                                          ("Alex", 2),
+                                          ("Tom", 4),
+                                          ("George", 3),
+                                          ("Max", 60),
+                                          ("Tommy", 94),
+                                          ("William", 12),
+                                          ("Sophia", 14),
+                                          ("Oliver", 13),
+                                          ("Sandra", 91),
+                                          ("Ann", 6),
+                                          ("Elizabeth", 9),
+                                          ("Kate", 20)]
+               ]
+    workers_copy = copy.deepcopy(workers)
+    print(f"Array before sort: {workers}")
 
-print(f"Array before sort: {worker_slice}")
-print("---------Sort by id-----------")
-sortedArray = merge_sort(worker_slice, lambda i, j: i.get_id() < j.get_id())
-print(f"Array after ascending sorting: {sortedArray}")
-sortedArray = merge_sort(worker_slice, lambda i, j: i.get_id() > j.get_id())
-print(f"Array after descending sorting: {sortedArray}")
+    print("---------Sort by id-----------")
+    merge_sort(workers, lambda i, j: i.get_id() < j.get_id())
+    print(f"Array after ascending sorting: {workers}")
+    merge_sort(workers_copy, lambda i, j: i.get_id() > j.get_id())
+    print(f"Array after descending sorting: {workers_copy}")
 
-print("---------Sort by name-----------")
-sortedArray = merge_sort(worker_slice, lambda i, j: i.get_name() < j.get_name())
-print(f"Array after ascending sorting: {sortedArray}")
-sortedArray = merge_sort(worker_slice, lambda i, j: i.get_name() > j.get_name())
-print(f"Array after descending sorting: {sortedArray}")
+    print("---------Sort by name-----------")
+    merge_sort(workers, lambda i, j: i.get_name() < j.get_name())
+    print(f"Array after ascending sorting: {workers}")
+    merge_sort(workers_copy, lambda i, j: i.get_name() > j.get_name())
+    print(f"Array after descending sorting: {workers_copy}")

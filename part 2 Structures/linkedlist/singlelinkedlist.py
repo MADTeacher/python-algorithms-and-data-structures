@@ -140,10 +140,6 @@ class SingleLinkedList(Generic[T]):
         return f"Current state: [{my_str}]"
 
 
-def print_list(data: T):
-    print(data)
-
-
 if __name__ == '__main__':
     single_linked_list = SingleLinkedList[Cat]()
     print(single_linked_list)
@@ -152,6 +148,10 @@ if __name__ == '__main__':
     single_linked_list.push_tail(Cat("Tom", 7))
     single_linked_list.insert(2, Cat("Tommy", 1))
     print(f"List size: {single_linked_list.get_size()}")
+
+    def print_list(data: T):
+        print(data)
+        
     single_linked_list.for_each(print_list)
     print(f"Get data with index {1}: {single_linked_list.get(1)}")
     print("--Remove data--")

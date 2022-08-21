@@ -61,7 +61,7 @@ class QueueArray(Generic[T]):
         my_list: list[T] = []
         for it in range(0, self._length):
             my_list.append(self._arr[it])
-        print(f"Stack: {my_list}")
+        print(f"Queue: {my_list}")
 
 
 if __name__ == '__main__':

@@ -15,11 +15,6 @@ class IKey(ABC):
 T = TypeVar("T", bound=IKey)
 
 
-class Color(Enum):
-    RED = 0
-    BLACK = 1
-
-
 @dataclass
 class Node(Generic[T]):
     data: T
@@ -215,7 +210,7 @@ class AVLTree(Generic[T]):
         return last_node.data
 
     def print_tree(self) -> None:
-        result: list[str] = ["BinarySearchTree\n"]
+        result: list[str] = ["AVLTree\n"]
         if not self.is_empty():
             self.__create_str_tree(result, "", self._root, True)
         print("".join(result))

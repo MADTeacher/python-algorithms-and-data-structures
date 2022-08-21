@@ -63,7 +63,7 @@ class QueueLinkedList(Generic[T]):
 
     def print_queue(self) -> None:
         if self.is_empty():
-            print("Stack is empty")
+            print("Queue is empty")
         my_list: list[T] = []
         current_node = self._head
         my_list.append(current_node.data)

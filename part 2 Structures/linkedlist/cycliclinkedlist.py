@@ -126,11 +126,10 @@ class CyclicLinkedList(Generic[T]):
         return f"Current state: [{my_str}]"
 
 
-def print_list(data: T):
-    print(data)
-
-
 if __name__ == '__main__':
+    def print_list(data: T):
+        print(data)
+
     cyclic_linked_list = CyclicLinkedList[Cat]()
     print(cyclic_linked_list)
     cyclic_linked_list.add(Cat("Max", 4))
@@ -148,4 +147,3 @@ if __name__ == '__main__':
     print(f"Head data before rotate: {cyclic_linked_list.value()}")
     print("--ReverseForEach--")
     cyclic_linked_list.reverse_for_each(print_list)
-

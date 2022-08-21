@@ -6,10 +6,6 @@ K = TypeVar("K", str, int)
 V = TypeVar("V")
 
 
-class KeyNotFoundException(Exception):
-    pass
-
-
 @dataclass
 class Cat:
     name: str
@@ -31,7 +27,8 @@ class HashTable(Generic[K, V]):
     def __init__(self, capacity: int) -> None:
         self._size: int = 0
         self._capacity: int = capacity
-        self._table: ctypes.Array[Optional[Node[K, V]]] = (capacity * ctypes.py_object)()
+        self._table: ctypes.Array[Optional[Node[K, V]]] = (
+            capacity * ctypes.py_object)()
         for i in range(0, capacity):
             self._table[i] = None
 
@@ -39,8 +36,9 @@ class HashTable(Generic[K, V]):
         h = hash(key)
         return (self._capacity - 1) & (h ^ (h >> 16))
 
-    def resolve_put_collision(self, key: K, value: V, index: int) -> None:
-        self._table[index] = Node(key=key, value=value, next_ptr=self._table[index])
+    def _resolve_put_collision(self, key: K, value: V, index: int) -> None:
+        self._table[index] = Node(
+            key=key, value=value, next_ptr=self._table[index])
         print(f"Collision: (index: {index}, key: {key}, value: {value})")
 
     def capacity(self) -> int:
@@ -59,7 +57,7 @@ class HashTable(Generic[K, V]):
                     node.value = value
                     return
                 node = node.next_ptr
-            self.resolve_put_collision(key, value, index)  # коллизия
+            self._resolve_put_collision(key, value, index)  # коллизия
         self._size += 1
 
     def get(self, key: K) -> Optional[V]:
@@ -131,7 +129,8 @@ class HashTable(Generic[K, V]):
 
     def clear(self) -> None:
         self._size = 0
-        self._table: ctypes.Array[Optional[Node[K, V]]] = (self._capacity * ctypes.py_object)(None)
+        self._table: ctypes.Array[Optional[Node[K, V]]] = ((self._capacity *
+                                                            ctypes.py_object)(None))
         for i in range(0, self._capacity):
             self._table[i] = None
 
@@ -146,11 +145,10 @@ class HashTable(Generic[K, V]):
                     current_node = current_node.next_ptr
 
 
-def print_hash_table(key: K, value: V) -> None:
-    print(f"Table element: {key}:{value}")
-
-
 if __name__ == '__main__':
+    def print_hash_table(key: K, value: V) -> None:
+        print(f"Table element: {key}:{value}")
+
     hash_table: HashTable = HashTable[str, Cat](10)
     hash_table.put("Home", Cat("Alex", 4))
     hash_table.put("1", Cat("Tom", 6))
@@ -175,5 +173,5 @@ if __name__ == '__main__':
     print("-----Values ------")
     print(hash_table.values())
 
-    print("-----Values ------")
+    print("-----Сontains ------")
     print(hash_table.contains("2"))
